@@ -1,14 +1,13 @@
-import { IProperty } from "../IProperty";
+import {INote} from "../INote";
 import { IQuery } from "../../common/IQuery";
 import Query from "../../common/query/Query";
 
-export default class PropertyDAO implements IQuery {
-    private query: IQuery = new Query("properties");
-
-    async create(property: IProperty) {
-        return this.query.create(property);
+export default class NoteDAO implements IQuery {
+    private query: IQuery = new Query("notes");
+    
+    async create(note: INote) {
+        return this.query.create(note);
     }
-
     async delete(id: string): Promise<any> {
         return this.query.delete(id);
     }
@@ -21,7 +20,7 @@ export default class PropertyDAO implements IQuery {
         return this.query.readAll();
     }
 
-    async update(id: string, resource: Partial<IProperty>): Promise<any> {
+    async update(id: string, resource: Partial<INote>): Promise<any> {
         return this.query.update(id, resource);
     }
 }

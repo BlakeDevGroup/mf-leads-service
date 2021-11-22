@@ -6,6 +6,7 @@ interface IDBMock {
 
 let DBMock: IDBMock = {
     properties: [],
+    notes: [],
 };
 
 export default DBMock;
