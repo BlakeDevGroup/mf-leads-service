@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import PropertyService from "../service/PropertyService";
 
 export default class PropertyController {
@@ -29,7 +28,7 @@ export default class PropertyController {
     }
 
     async getProperty(req: Request, res: Response) {
-        const result: any = await this.service.getById(req.body.property_id);
+        const result: any = await this.service.getById(req.params.id);
 
         if (result.data) {
             res.status(result.status).json(result.data);

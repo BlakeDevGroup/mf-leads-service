@@ -1,6 +1,5 @@
-import {Request, Response } from "express";
-
-import { INote } from "../INote";
+import { Request, Response } from "express";
+// import { INote } from "../INote";
 import NoteService from "../service/NoteService";
 
 export default class NoteController {
@@ -8,7 +7,7 @@ export default class NoteController {
 
     async createNote(req: Request, res: Response) {
         const result: any = await this.service.add(req.body);
-        
+
         if (result.data) {
             res.status(result.status).json(result.data);
         } else {
@@ -17,10 +16,7 @@ export default class NoteController {
     }
 
     async updateNote(req: Request, res: Response) {
-        const result: any = await this.service.putById(
-            req.body.id,
-            req.body
-        );
+        const result: any = await this.service.putById(req.body.id, req.body);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -57,7 +53,5 @@ export default class NoteController {
         } else {
             res.status(result.status).json(result.error);
         }
-
     }
-    }
-    
+}
