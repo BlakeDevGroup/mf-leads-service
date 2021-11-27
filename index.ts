@@ -2,6 +2,7 @@ import express from "express";
 import * as http from "http";
 import cors from "cors";
 import PropertyRouter from "./server/properties/routes/PropertyRoutes";
+import NoteRouter from "./server/notes/routes/NoteRoutes";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/property", PropertyRouter);
+app.use("/note", NoteRouter);
 
 server.listen(PORT, () => {
   console.log(RUNNING_MESSAGE);

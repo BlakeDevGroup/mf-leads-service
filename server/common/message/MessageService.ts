@@ -18,7 +18,7 @@ export const sendSuccess = (
 };
 
 export const sendFailure = (
-    status: number = 200,
+    status: number = 400,
     error: Error
 ): ResponsePayload => {
     return { error, status };
