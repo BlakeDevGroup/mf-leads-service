@@ -128,16 +128,16 @@ describe("PropertyController", () => {
                 .stub(PropertyService.prototype, "getById")
                 .resolves(resolved);
 
-            const body = {
-                property_id: "1",
+            const params = {
+                id: "1",
             };
             let request = createRequest({
-                body,
+                params,
             });
 
             await controller.getProperty(request, res);
 
-            expect(stub).calledOnceWith(body.property_id);
+            expect(stub).calledOnceWith(params.id);
 
             expect(status).calledOnceWith(resolved.status);
             expect(send).calledOnceWith(resolved.data);

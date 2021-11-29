@@ -19,7 +19,6 @@ let sandbox: sinon.SinonSandbox;
 let service: PropertyService;
 
 const PROPERTY_DATA: IProperty = {
-    property_id: "",
     address: {
         city: "",
         county: "",

@@ -10,7 +10,6 @@ let sandbox: sinon.SinonSandbox;
 let spy: sinon.SinonSpy;
 let dao: PropertyDAO;
 const PROPERTY_DATA: IProperty = {
-    property_id: "",
     address: {
         city: "",
         county: "",
