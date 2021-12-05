@@ -42,7 +42,7 @@ export default class PropertyService implements IService {
             if (!property)
                 return MessageService.sendFailure(
                     404,
-                    new Error(`No property found with id: ${id}`)
+                    `No property found with id: ${id}`
                 );
             return MessageService.sendSuccess(200, property);
         } catch (e: any) {

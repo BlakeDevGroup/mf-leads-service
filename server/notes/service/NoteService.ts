@@ -1,5 +1,5 @@
 import { IService } from "../../common/IService";
-import {INote}  from "../INote";
+import { INote } from "../INote";
 import NoteDao from "../dao/NoteDao";
 import MessageService, {
     ResponsePayload,
@@ -42,7 +42,7 @@ export default class NoteService implements IService {
             if (!note)
                 return MessageService.sendFailure(
                     404,
-                    new Error(`No note found with id: ${id}`)
+                    `No note found with id: ${id}`
                 );
             return MessageService.sendSuccess(200, note);
         } catch (e: any) {
@@ -53,10 +53,7 @@ export default class NoteService implements IService {
         try {
             await this.dao.delete(id);
 
-            return MessageService.sendSuccess(
-                200,
-                "Successfully deleted note"
-            );
+            return MessageService.sendSuccess(200, "Successfully deleted note");
         } catch (e: any) {
             return MessageService.sendFailure(500, e);
         }

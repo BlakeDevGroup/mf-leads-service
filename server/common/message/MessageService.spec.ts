@@ -14,8 +14,11 @@ describe("MessageService", () => {
     it("should return object with error and status", () => {
         const ERROR = new Error("Error");
 
-        const result = MessageService.sendFailure(500, ERROR);
+        const result = MessageService.sendFailure(500, "Error");
 
-        expect(result).to.eql({ status: 500, error: ERROR });
+        expect(result).to.eql({
+            error: { error: { status: 500, message: "Error" } },
+            status: 500,
+        });
     });
 });

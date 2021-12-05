@@ -22,7 +22,7 @@ const resolved = {
 
 const failed = {
     status: 400,
-    error: ERROR,
+    error: { status: 400, message: "ERROR" },
 };
 
 describe("PropertyController", () => {
