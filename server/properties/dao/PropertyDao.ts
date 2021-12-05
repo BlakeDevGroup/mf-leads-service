@@ -24,4 +24,5 @@ export default class PropertyDAO implements IQuery {
     async update(id: string, resource: Partial<IProperty>): Promise<any> {
         return this.query.update(id, resource);
     }
+    async readBy(property: string, value: string) {}
 }

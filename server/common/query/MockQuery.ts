@@ -50,6 +50,10 @@ export default class MockQuery implements IQuery {
         return updatedEntry;
     }
 
+    async readBy(property: string, value: string): Promise<any> {
+        return this.table.filter((entry) => entry[property] == value)[0];
+    }
+
     private writeToDB() {
         DBMock[this.tableName] = this.table;
     }

@@ -4,4 +4,5 @@ export interface IQuery {
     read: (id: string) => Promise<any>;
     readAll: () => Promise<any>;
     update: (id: string, resource: Partial<any>) => Promise<any>;
+    readBy: (property: string, value: string) => Promise<any>;
 }

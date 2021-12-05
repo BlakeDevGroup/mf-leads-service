@@ -1,9 +1,10 @@
 import sinonChai from "sinon-chai";
-import sinon from "sinon";
+import sinon, { mock } from "sinon";
 import chai, { expect } from "chai";
 import MockQuery from "./MockQuery";
 import * as dbMock from "../mocks/DBMock";
 import { isUuid } from "uuidv4";
+import { clearDBMock } from "../mocks/DBMock";
 
 chai.use(sinonChai);
 
@@ -27,7 +28,6 @@ describe("MockQuery", () => {
 
         expect(spy).to.have.been.calledOnceWith(table);
     });
-
     describe("create", () => {
         it("should create a resource in db", async () => {
             const result = await mockQuery.create(DB_ENTRY);
@@ -97,6 +97,37 @@ describe("MockQuery", () => {
 
             expect(result).to.equal(dbMock.default[tableName][0]);
             expect(result).to.eql(Object.assign({ id: id }, REPLACE_ENTRY));
+        });
+    });
+
+    describe("readBy", () => {
+        it("should return entity when value exists for given property", async () => {
+            const id = await mockQuery.create(DB_ENTRY);
+
+            const result = await mockQuery.readBy("random", "random");
+
+            expect(result).to.equal(dbMock.default[tableName][0]);
+            expect(result).to.eql(Object.assign({ id: id }, DB_ENTRY));
+        });
+
+        it("should return undefined when value does not exist for given property", async () => {
+            const id = await mockQuery.create(DB_ENTRY);
+
+            const result = await mockQuery.readBy("random", "asdf");
+
+            expect(result).to.not.equal(dbMock.default[tableName][0]);
+
+            expect(result).to.equal(undefined);
+        });
+
+        it("should return undefined when property does not exist for given table", async () => {
+            const id = await mockQuery.create(DB_ENTRY);
+
+            const result = await mockQuery.readBy("asdf", "random");
+
+            expect(result).to.not.equal(dbMock.default[tableName][0]);
+
+            expect(result).to.equal(undefined);
         });
     });
 });

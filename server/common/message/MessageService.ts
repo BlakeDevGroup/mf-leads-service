@@ -4,7 +4,12 @@ export interface ISuccessPayload {
 }
 
 export interface IErrorPayload {
-    error: Error;
+    error: object;
+    status: number;
+}
+
+interface IErrorResponse {
+    message: string;
     status: number;
 }
 
@@ -17,11 +22,15 @@ export const sendSuccess = (
     return { data, status };
 };
 
+export const makeErrorResposne = (message: string, status: number) => {
+    return { error: { message, status } };
+};
+
 export const sendFailure = (
     status: number = 400,
-    error: Error
+    message: string
 ): ResponsePayload => {
-    return { error, status };
+    return { error: makeErrorResposne(message, status), status };
 };
 
 const MessageService = {

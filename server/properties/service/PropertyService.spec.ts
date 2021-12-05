@@ -4,11 +4,8 @@ import chai, { expect } from "chai";
 import PropertyDao from "../dao/PropertyDao";
 import PropertyService from "./PropertyService";
 import { IProperty } from "../IProperty";
-import MessageService, {
-    ResponsePayload,
-} from "../../common/message/MessageService";
+import MessageService from "../../common/message/MessageService";
 import LogService from "../../common/logging/LoggingService";
-import PropertyDAO from "../dao/PropertyDao";
 
 chai.use(sinonChai);
 let spy: sinon.SinonSpy;
@@ -164,10 +161,8 @@ describe("PropertyService", () => {
 
             const result = await service.getById(ID);
 
-            expect(spyFailure).calledOnce;
-            expect(spyFailure.args[0][0]).equal(404);
-            expect(spyFailure.args[0][1]).to.be.an("error");
-            expect(spyFailure.args[0][1].message).to.equal(
+            expect(spyFailure).calledOnceWith(
+                404,
                 `No property found with id: ${ID}`
             );
 
