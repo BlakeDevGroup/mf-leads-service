@@ -18,20 +18,14 @@ let service: PropertyService;
 const PROPERTY_DATA: IProperty = {
     address: {
         city: "",
-        county: "",
         state: "",
         street: "",
         zip_code: "",
     },
-    owner_id: "",
     owner_name: "",
     owner_email: "",
     owner_number: "",
-    price: 0,
     units: 0,
-    sqft: 0,
-    buildings: 0,
-    year_built: 0,
     notes: [],
 };
 const ID = "1";

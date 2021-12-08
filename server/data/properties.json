@@ -1,0 +1,251 @@
+{
+    "properties": [
+        {
+            "owner_name": "Sassan Rostamian",
+            "owner_entity": "7728 Norton Ave Llc",
+            "address": {
+                "street": "1612 1st St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "8",
+            "owner_number": "818 599-2845",
+            "owner_email": "srostamian@aol.com"
+        },
+        {
+            "owner_name": "Sassan Rostamian",
+            "owner_entity": "2501 Bishop Drive Llc",
+            "address": {
+                "street": "2325 Chester Ln",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "14",
+            "owner_number": "818 599-2845",
+            "owner_email": "srostamian@aol.com"
+        },
+        {
+            "owner_name": "Sassan Rostamian",
+            "owner_entity": "1905 California Ave Llc",
+            "address": {
+                "street": "1905 California Ave",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "24",
+            "owner_number": "818 599-2845",
+            "owner_email": "srostamian@aol.com"
+        },
+        {
+            "owner_name": "Juan Castillo",
+            "owner_entity": "Castillo Juan H & Sally J Fam Tr",
+            "address": {
+                "street": "424 Woodrow St",
+                "city": "Taft",
+                "state": "CA",
+                "zip_code": 93268
+            },
+            "units": "20",
+            "owner_number": "559 783-6575",
+            "owner_email": "Big_juann@yahoo.com"
+        },
+        {
+            "owner_name": "Gullap Joseph I",
+            "owner_entity": "Gullap Joseph I",
+            "address": {
+                "street": "1021 Quincy St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93305
+            },
+            "units": "6",
+            "owner_number": "310-430-0159",
+            "owner_email": "jgullap@yahoo.com"
+        },
+        {
+            "owner_name": "Sri M Renganathan",
+            "owner_entity": "Sri M Renganathan",
+            "address": {
+                "street": "1701 B St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93301
+            },
+            "units": "12",
+            "owner_number": "909 240-7043",
+            "owner_email": "sriren@gmail.com"
+        },
+        {
+            "owner_name": "Willi H Coeler ",
+            "owner_entity": "Willi H Coeler ",
+            "address": {
+                "street": "21220 Campo Ct",
+                "city": "Tehachapi",
+                "state": "CA",
+                "zip_code": 93561
+            },
+            "units": "8",
+            "owner_number": "805 340-3316",
+            "owner_email": "wcoeler@roadrunner.com"
+        },
+        {
+            "owner_name": "Willi H Coeler ",
+            "owner_entity": "Willi H Coeler ",
+            "address": {
+                "street": "21509 Golden Hills Blvd",
+                "city": "Tehachapi",
+                "state": "CA",
+                "zip_code": 93561
+            },
+            "units": "8",
+            "owner_number": "805 340-3316",
+            "owner_email": "wcoeler@roadrunner.com"
+        },
+        {
+            "owner_name": "Willi H Coeler ",
+            "owner_entity": "Willi H Coeler ",
+            "address": {
+                "street": "21533 Golden Hills Blvd",
+                "city": "Tehachapi",
+                "state": "CA",
+                "zip_code": 93561
+            },
+            "units": "10",
+            "owner_number": "805 340-3316",
+            "owner_email": "wcoeler@roadrunner.com"
+        },
+        {
+            "owner_name": "John Shannon",
+            "owner_entity": "John Shannon",
+            "address": {
+                "street": "2003 21st St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93301
+            },
+            "units": "9",
+            "owner_number": "661 332-2338",
+            "owner_email": "johnshannon626@gmail.com"
+        },
+        {
+            "owner_name": "Russ mckee",
+            "owner_entity": "Nya Bakersfield Llc",
+            "address": {
+                "street": "1906 18th St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93301
+            },
+            "units": "35",
+            "owner_number": "619 840-8700 ",
+            "owner_email": "rmckee@mckeecompany.com"
+        },
+        {
+            "owner_name": "Gurbinder Singh",
+            "owner_entity": "Gss LLC",
+            "address": {
+                "street": "2401 Olive St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93301
+            },
+            "units": "16",
+            "owner_number": "714 548-7535 ",
+            "owner_email": "gssingh@hotmail.com"
+        },
+        {
+            "owner_name": "Steven Scott Lamar",
+            "owner_entity": "Royal Palms West LLC",
+            "address": {
+                "street": "1001 W Columbus St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93301
+            },
+            "units": "24",
+            "owner_number": " 310 722-7486",
+            "owner_email": "stevenlscott@sbcglobal.net"
+        },
+        {
+            "owner_name": "WILLIAM AYYAD",
+            "owner_entity": "Fs Foreith Street Lp",
+            "address": {
+                "street": "1200 38th St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93301
+            },
+            "units": "120",
+            "owner_number": "858 344-8890",
+            "owner_email": "willy@udgi.net"
+        },
+        {
+            "owner_name": "Gaona Cesar V",
+            "owner_entity": "Gaona Cesar V",
+            "address": {
+                "street": "1214 4th St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "9",
+            "owner_number": "(661) 865-9557",
+            "owner_email": "CGAONA1@LIVE.COM"
+        },
+        {
+            "owner_name": "Bermudez Edward F",
+            "owner_entity": "Bermudez Edward F",
+            "address": {
+                "street": "921 Castro Ln",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "9",
+            "owner_number": "(805) 231-4988",
+            "owner_email": "edwardfbermudez@gmail.com"
+        },
+        {
+            "owner_name": "JT Presley",
+            "owner_entity": "JT Presley",
+            "address": {
+                "street": "500 H St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "14",
+            "owner_number": "(310) 488-9288",
+            "owner_email": "planetpresley2@yahoo.com"
+        },
+        {
+            "owner_name": "John Romanini",
+            "owner_entity": "Romanini Investments Llc",
+            "address": {
+                "street": "2323 Chester Ln",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "16",
+            "owner_number": " (661) 203-2030",
+            "owner_email": "jromanini01@gmail.com"
+        },
+        {
+            "owner_name": "Morales Pedro C & Maria G M",
+            "owner_entity": "Morales Pedro C & Maria G M",
+            "address": {
+                "street": "1919 Lacey St",
+                "city": "Bakersfield",
+                "state": "CA",
+                "zip_code": 93304
+            },
+            "units": "17",
+            "owner_number": "(661) 827-8478",
+            "owner_email": "pcmorales47@gmail.com"
+        }
+    ]
+}
