@@ -7,6 +7,7 @@ import { body } from "express-validator";
 import DBMock from "./server/common/mocks/DBMock";
 import bcrypt from "bcrypt";
 import UserRouter from "./server/users/routes/UserRoutes";
+import { loadPropertyData } from "./server/data/LoadMockPropertyData";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -14,15 +15,27 @@ const server: http.Server = http.createServer(app);
 const PORT = process.env.PORT || 3500;
 const RUNNING_MESSAGE = `Server running at http://localhost:${PORT}`;
 
-bcrypt.hash("blake123", 10, (err, hash) => {
+bcrypt.hash("user", 10, (err, hash) => {
     DBMock["users"].push({
-        created_date: "10-24-2021",
+        created_date: new Date().toDateString(),
         modified_on: "",
         password: hash,
-        user_name: "cdblake31",
+        user_name: "user",
     });
     console.log("finished adding user");
 });
+
+bcrypt.hash("Vandenk1!", 10, (err, hash) => {
+    DBMock["users"].push({
+        created_date: new Date().toDateString(),
+        modified_on: "",
+        password: hash,
+        user_name: "admin",
+    });
+    console.log("finished adding user");
+});
+
+loadPropertyData();
 
 const SECRET = process.env.SECRET;
 app.use(express.urlencoded({ extended: true }));
@@ -39,7 +52,6 @@ app.use("/login", UserRouter);
 
 server.listen(PORT, () => {
     console.log(RUNNING_MESSAGE);
-    console.log(SECRET);
 });
 
 export default app;
