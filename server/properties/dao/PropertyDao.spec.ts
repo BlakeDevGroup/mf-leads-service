@@ -19,6 +19,7 @@ const PROPERTY_DATA: IProperty = {
     owner_name: "",
     owner_email: "",
     owner_number: "",
+    owner_entity: "",
     units: 0,
     notes: [],
 };
