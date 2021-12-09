@@ -15,10 +15,7 @@ export default class PropertyController {
     }
 
     async updateProperty(req: Request, res: Response) {
-        const result: any = await this.service.putById(
-            req.body.property_id,
-            req.body
-        );
+        const result: any = await this.service.putById(req.body.id, req.body);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -48,7 +45,7 @@ export default class PropertyController {
     }
 
     async deleteProperty(req: Request, res: Response) {
-        const result: any = await this.service.deleteById(req.body.property_id);
+        const result: any = await this.service.deleteById(req.body.idjj);
 
         if (result.data) {
             res.status(result.status).json(result.data);
