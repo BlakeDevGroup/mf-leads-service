@@ -16,7 +16,10 @@ export default class NoteController {
     }
 
     async updateNote(req: Request, res: Response) {
-        const result: any = await this.service.putById(req.body.id, req.body);
+        const result: any = await this.service.putById(
+            req.body.note_id,
+            req.body
+        );
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -26,7 +29,7 @@ export default class NoteController {
     }
 
     async getNote(req: Request, res: Response) {
-        const result: any = await this.service.getById(req.params.id);
+        const result: any = await this.service.getById(req.params.note_id);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -36,7 +39,7 @@ export default class NoteController {
     }
 
     async listNote(req: Request, res: Response) {
-        const result: any = await this.service.list(100, 10);
+        const result: any = await this.service.list(req.body.property_id);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -46,7 +49,17 @@ export default class NoteController {
     }
 
     async deleteNote(req: Request, res: Response) {
-        const result: any = await this.service.deleteById(req.body.id);
+        const result: any = await this.service.deleteById(req.body.note_id);
+
+        if (result.data) {
+            res.status(result.status).json(result.data);
+        } else {
+            res.status(result.status).json(result.error);
+        }
+    }
+
+    async getAllNotes(req: Request, res: Response) {
+        const result: any = await this.service.getAll();
 
         if (result.data) {
             res.status(result.status).json(result.data);

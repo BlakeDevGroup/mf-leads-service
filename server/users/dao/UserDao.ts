@@ -25,7 +25,7 @@ export default class UserDao implements IQuery {
         return this.query.update(id, resource);
     }
 
-    async readBy(property: string, value: string) {
+    async readBy(property: string, value: string): Promise<IUser[]> {
         return this.query.readBy(property, value);
     }
 }

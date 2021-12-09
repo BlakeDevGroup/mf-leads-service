@@ -8,6 +8,8 @@ import DBMock from "./server/common/mocks/DBMock";
 import bcrypt from "bcrypt";
 import UserRouter from "./server/users/routes/UserRoutes";
 import { loadPropertyData } from "./server/data/LoadMockPropertyData";
+import { loadNotesData } from "./server/data/LoadMockNoteData";
+import NoteController from "./server/notes/controllers/NoteController";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -36,6 +38,7 @@ bcrypt.hash("Vandenk1!", 10, (err, hash) => {
 });
 
 loadPropertyData();
+loadNotesData();
 
 const SECRET = process.env.SECRET;
 app.use(express.urlencoded({ extended: true }));
@@ -47,8 +50,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/property", PropertyRouter);
-app.use("/note", NoteRouter);
 app.use("/login", UserRouter);
+
+const noteController = new NoteController();
+app.get("/note", noteController.getAllNotes.bind(noteController));
 
 server.listen(PORT, () => {
     console.log(RUNNING_MESSAGE);
