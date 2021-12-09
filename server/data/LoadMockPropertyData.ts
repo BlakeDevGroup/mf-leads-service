@@ -1,8 +1,8 @@
-import MockQuery from "../common/query/MockQuery";
-import propertyData from "./properties.json";
+import propertyData from "./properties.live.json";
+import DBMock from "../common/mocks/DBMock";
 
 export const loadPropertyData = () => {
-    let query = new MockQuery("properties");
-    const properties = propertyData.properties;
-    propertyData.properties.forEach((property) => query.create(property));
+    const properties = propertyData;
+
+    properties.forEach((property) => DBMock["properties"].push(property));
 };

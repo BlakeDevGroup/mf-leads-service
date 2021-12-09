@@ -1,7 +1,7 @@
 import { Router, Request } from "express";
 // import PropertyRouter from "../../notes/routes/NoteRoutes";
 import PropertyController from "../controllers/PropertyController";
-
+import NoteRouter from "../../notes/routes/NoteRoutes";
 const propertyController = new PropertyController();
 const PropertyRouter = Router();
 
@@ -15,8 +15,8 @@ PropertyRouter.post(
     propertyController.createProperty.bind(propertyController)
 );
 
-PropertyRouter.use("/id:", (req: Request, res, next) => {
-    req.body.id = req.params.id;
+PropertyRouter.use("/:id*", (req: Request, res, next) => {
+    req.body.property_id = req.params.id;
     next();
 });
 
@@ -32,5 +32,7 @@ PropertyRouter.delete(
     "/:id",
     propertyController.deleteProperty.bind(propertyController)
 );
+
+PropertyRouter.use("/:id/note", NoteRouter);
 
 export default PropertyRouter;

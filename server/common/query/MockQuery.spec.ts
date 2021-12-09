@@ -32,22 +32,23 @@ describe("MockQuery", () => {
         it("should create a resource in db", async () => {
             const result = await mockQuery.create(DB_ENTRY);
 
-            expect(isUuid(result)).to.equal(true);
+            const expected = Object.assign(DB_ENTRY, { id: result.id });
+            expect(result).to.eql(expected);
             expect(dbMock.default[tableName].length).to.equal(1);
 
             const value = dbMock.default[tableName][0];
 
             expect(value).to.be.an("object").and.include.keys("random", "id");
             expect(value.random).to.equal("random");
-            expect(value.id).to.equal(result);
+            expect(value.id).to.eql(result.id);
         });
     });
 
     describe("delete", () => {
         it("should delete a resource by id", async () => {
-            const id = await mockQuery.create(DB_ENTRY);
+            const result = await mockQuery.create(DB_ENTRY);
 
-            await mockQuery.delete(id);
+            await mockQuery.delete(result.id);
 
             expect(dbMock.default[tableName].length).to.equal(0);
         });
@@ -55,11 +56,11 @@ describe("MockQuery", () => {
 
     describe("read", () => {
         it("when id is in table, then return array with id", async () => {
-            const id = await mockQuery.create(DB_ENTRY);
+            const expected = await mockQuery.create(DB_ENTRY);
 
-            const result = await mockQuery.read(id);
+            const result = await mockQuery.read(expected.id);
 
-            expect(dbMock.default[tableName][0]).to.equal(result);
+            expect(result).to.eql(expected);
         });
 
         it("when id is not in table, then remove array with id", async () => {
@@ -90,24 +91,23 @@ describe("MockQuery", () => {
         });
 
         it("when id is in table, return updated result", async () => {
-            const id = await mockQuery.create(DB_ENTRY);
-            const REPLACE_ENTRY = { random: "true" };
+            let expected = await mockQuery.create(DB_ENTRY);
+            let REPLACE_ENTRY = { random: "true" };
 
-            const result = await mockQuery.update(id, REPLACE_ENTRY);
+            const result = await mockQuery.update(expected.id, REPLACE_ENTRY);
 
-            expect(result).to.equal(dbMock.default[tableName][0]);
-            expect(result).to.eql(Object.assign({ id: id }, REPLACE_ENTRY));
+            expect(result).to.eql(Object.assign(expected, REPLACE_ENTRY));
         });
     });
 
     describe("readBy", () => {
         it("should return entity when value exists for given property", async () => {
-            const id = await mockQuery.create(DB_ENTRY);
+            const expected = await mockQuery.create(DB_ENTRY);
 
             const result = await mockQuery.readBy("random", "random");
 
-            expect(result).to.equal(dbMock.default[tableName][0]);
-            expect(result).to.eql(Object.assign({ id: id }, DB_ENTRY));
+            expect(result[0]).to.equal(dbMock.default[tableName][0]);
+            expect(result[0]).to.eql(expected);
         });
 
         it("should return undefined when value does not exist for given property", async () => {
@@ -115,9 +115,9 @@ describe("MockQuery", () => {
 
             const result = await mockQuery.readBy("random", "asdf");
 
-            expect(result).to.not.equal(dbMock.default[tableName][0]);
+            expect(result[0]).to.not.equal(dbMock.default[tableName][0]);
 
-            expect(result).to.equal(undefined);
+            expect(result[0]).to.equal(undefined);
         });
 
         it("should return undefined when property does not exist for given table", async () => {
@@ -125,9 +125,9 @@ describe("MockQuery", () => {
 
             const result = await mockQuery.readBy("asdf", "random");
 
-            expect(result).to.not.equal(dbMock.default[tableName][0]);
+            expect(result[0]).to.not.equal(dbMock.default[tableName][0]);
 
-            expect(result).to.equal(undefined);
+            expect(result[0]).to.equal(undefined);
         });
     });
 });

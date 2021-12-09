@@ -1,0 +1,22 @@
+{
+    "notes": [
+        {
+            "note": "some note",
+            "created_by": "some user",
+            "created_timestamp": "some time",
+            "last_modified": "some modification",
+            "modified_by": "some user",
+            "id": "fcb750fd-8b7b-4299-aaff-c976a3431e43",
+            "property_id": "81cccc4f-95d5-4312-a628-33c05b3c7011"
+        },
+        {
+            "note": "some note",
+            "created_by": "some user",
+            "created_timestamp": "some time",
+            "last_modified": "some modification",
+            "modified_by": "some user",
+            "id": "a977eafd-dc1a-41bc-a67c-0c4ec9678713",
+            "property_id": "81cccc4f-95d5-4312-a628-33c05b3c7011"
+        }
+    ]
+}
