@@ -45,7 +45,7 @@ export default class PropertyController {
     }
 
     async deleteProperty(req: Request, res: Response) {
-        const result: any = await this.service.deleteById(req.body.idjj);
+        const result: any = await this.service.deleteById(req.body.id);
 
         if (result.data) {
             res.status(result.status).json(result.data);

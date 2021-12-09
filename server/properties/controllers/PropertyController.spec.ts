@@ -90,7 +90,7 @@ describe("PropertyController", () => {
                 .resolves(resolved);
 
             const body = {
-                property_id: "1",
+                id: "1",
             };
             let request = createRequest({
                 body,
@@ -98,7 +98,7 @@ describe("PropertyController", () => {
 
             await controller.updateProperty(request, res);
 
-            expect(stub).calledOnceWith(body.property_id, body);
+            expect(stub).calledOnceWith(body.id, body);
 
             expect(status).calledOnceWith(resolved.status);
             expect(send).calledOnceWith(resolved.data);
@@ -110,7 +110,7 @@ describe("PropertyController", () => {
                 .resolves(failed);
 
             const body = {
-                property_id: "1",
+                id: "1",
             };
             let request = createRequest({
                 body,
@@ -149,7 +149,7 @@ describe("PropertyController", () => {
                 .resolves(failed);
 
             const body = {
-                property_id: "1",
+                id: "1",
             };
             let request = createRequest({
                 body,
@@ -168,7 +168,7 @@ describe("PropertyController", () => {
                 .resolves(resolved);
 
             const body = {
-                property_id: "1",
+                id: "1",
             };
             let request = createRequest({
                 body,
@@ -188,7 +188,7 @@ describe("PropertyController", () => {
                 .resolves(failed);
 
             const body = {
-                property_id: "1",
+                id: "1",
             };
             let request = createRequest({
                 body,
@@ -207,7 +207,7 @@ describe("PropertyController", () => {
                 .resolves(resolved);
 
             const body = {
-                property_id: "1",
+                id: 1,
             };
             let request = createRequest({
                 body,
@@ -215,7 +215,7 @@ describe("PropertyController", () => {
 
             await controller.deleteProperty(request, res);
 
-            expect(stub).calledOnceWith(body.property_id);
+            expect(stub).calledOnceWith(body.id);
 
             expect(status).calledOnceWith(resolved.status);
             expect(send).calledOnceWith(resolved.data);
@@ -227,7 +227,7 @@ describe("PropertyController", () => {
                 .resolves(failed);
 
             const body = {
-                property_id: "1",
+                id: "1",
             };
             let request = createRequest({
                 body,
