@@ -10,12 +10,10 @@ let sandbox: sinon.SinonSandbox;
 let spy: sinon.SinonSpy;
 let dao: PropertyDAO;
 const PROPERTY_DATA: IProperty = {
-    address: {
-        city: "",
-        state: "",
-        street: "",
-        zip_code: "",
-    },
+    city: "",
+    state: "",
+    street: "",
+    zip_code: "",
     owner_name: "",
     owner_email: "",
     owner_number: "",
@@ -31,7 +29,7 @@ describe("PropertyDAO", () => {
     });
 
     beforeEach(() => {
-        dao = new PropertyDAO();
+        dao = new PropertyDAO(new Query("properties"));
     });
 
     describe("create", () => {

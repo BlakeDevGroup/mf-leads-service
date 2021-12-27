@@ -10,7 +10,7 @@ export default class NoteService {
     private dao: NoteDao = new NoteDao();
     async list(property_id: string): Promise<ResponsePayload> {
         try {
-            const notes = await this.dao.readBy("property_id", property_id);
+            const notes = await this.dao.readNotesByPropertyId(property_id);
 
             return MessageService.sendSuccess(200, notes);
         } catch (e: any) {

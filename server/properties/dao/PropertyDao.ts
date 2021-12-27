@@ -1,9 +1,13 @@
 import { IProperty } from "../IProperty";
 import { IQuery } from "../../common/IQuery";
-import Query from "../../common/query/Query";
+import Query from "../query/PropertyQuery";
 
 export default class PropertyDAO implements IQuery {
-    private query: IQuery = new Query("properties");
+    private query: IQuery;
+
+    constructor(query: IQuery = new Query("properties")) {
+        this.query = query;
+    }
 
     async create(property: IProperty) {
         return this.query.create(property);
@@ -24,5 +28,6 @@ export default class PropertyDAO implements IQuery {
     async update(id: string, resource: Partial<IProperty>): Promise<any> {
         return this.query.update(id, resource);
     }
+
     async readBy(property: string, value: string) {}
 }

@@ -1,6 +1,6 @@
 import { INote } from "../INote";
 import { IQuery } from "../../common/IQuery";
-import Query from "../../common/query/Query";
+import Query from "../query/NoteQuery";
 
 export default class NoteDAO {
     private query: IQuery = new Query("notes");
