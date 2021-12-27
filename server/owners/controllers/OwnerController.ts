@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import PropertyService from "../service/PropertyService";
+import { ResponsePayload } from "../../common/message/MessageService";
+import OwnerService from "../service/OwnerService";
 
-export default class PropertyController {
-    private service: PropertyService = new PropertyService();
+export default class OwnerController {
+    private service: OwnerService = new OwnerService();
 
-    async createProperty(req: Request, res: Response) {
+    async createOwner(req: Request, res: Response) {
         const result: any = await this.service.add(req.body);
 
         if (result.data) {
@@ -14,9 +15,9 @@ export default class PropertyController {
         }
     }
 
-    async updateProperty(req: Request, res: Response) {
+    async updateOwner(req: Request, res: Response) {
         const result: any = await this.service.putById(
-            req.body.property_id,
+            req.body.owner_id,
             req.body
         );
 
@@ -27,7 +28,7 @@ export default class PropertyController {
         }
     }
 
-    async getProperty(req: Request, res: Response) {
+    async getOwner(req: Request, res: Response) {
         const result: any = await this.service.getById(req.params.id);
 
         if (result.data) {
@@ -37,7 +38,7 @@ export default class PropertyController {
         }
     }
 
-    async listProperties(req: Request, res: Response) {
+    async listOwners(req: Request, res: Response) {
         const result: any = await this.service.list(100, 10);
 
         if (result.data) {
@@ -47,8 +48,8 @@ export default class PropertyController {
         }
     }
 
-    async deleteProperty(req: Request, res: Response) {
-        const result: any = await this.service.deleteById(req.body.property_id);
+    async deleteOwner(req: Request, res: Response) {
+        const result: any = await this.service.deleteById(req.body.owner_id);
 
         if (result.data) {
             res.status(result.status).json(result.data);

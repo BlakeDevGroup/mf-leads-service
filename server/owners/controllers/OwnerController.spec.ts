@@ -2,19 +2,20 @@ import sinonChai from "sinon-chai";
 import sinon from "sinon";
 import chai, { expect } from "chai";
 import Sinon from "sinon";
-import PropertyService from "../service/PropertyService";
-import PropertyController from "./PropertyController";
+import OwnerService from "../service/OwnerService";
+import OwnerController from "./OwnerController";
 import { Response } from "express";
 import { createRequest, createResponse } from "node-mocks-http";
+
 chai.use(sinonChai);
+
 let stub: Sinon.SinonStub;
 let sandBox: Sinon.SinonSandbox;
-let controller: PropertyController;
+let controller: OwnerController;
 let status: Sinon.SinonSpy;
 let send: Sinon.SinonSpy;
 let res: Response;
 
-const ERROR = new Error("ERROR");
 const resolved = {
     status: 200,
     data: "resolved",
@@ -25,7 +26,7 @@ const failed = {
     error: { status: 400, message: "ERROR" },
 };
 
-describe("PropertyController", () => {
+describe("OwnerController", () => {
     before(() => {
         sandBox = sinon.createSandbox();
     });
@@ -33,8 +34,7 @@ describe("PropertyController", () => {
         sandBox.restore();
     });
     beforeEach(() => {
-        stub = sandBox.stub();
-        controller = new PropertyController();
+        controller = new OwnerController();
 
         res = createResponse();
 
@@ -43,23 +43,28 @@ describe("PropertyController", () => {
     });
 
     afterEach(() => {
-        stub.restore();
-
-        status.restore();
-        send.restore();
+        stub.resetHistory();
+        status.resetHistory();
+        send.resetHistory();
     });
 
-    describe("createProperty", () => {
-        it("should call status and send service.add() return value", async () => {
-            stub = sandBox
-                .stub(PropertyService.prototype, "add")
-                .resolves(resolved);
+    describe("createOwner", () => {
+        before(() => {
+            stub = sandBox.stub(OwnerService.prototype, "add");
+        });
 
+        after(() => {
+            stub.reset();
+        });
+        it("should call status and send sevice.add() return value", async () => {
+            stub.resolves(resolved);
             const body = { value: "value" };
+
             let request = createRequest({
                 body,
             });
-            await controller.createProperty(request, res);
+
+            await controller.createOwner(request, res);
 
             expect(stub).calledOnceWith(body);
             expect(status).calledOnceWith(resolved.status);
@@ -67,15 +72,13 @@ describe("PropertyController", () => {
         });
 
         it("when response failed send error", async () => {
-            stub = sandBox
-                .stub(PropertyService.prototype, "add")
-                .resolves(failed);
+            stub.resolves(failed);
 
             const body = { value: "value" };
             let request = createRequest({
                 body,
             });
-            await controller.createProperty(request, res);
+            await controller.createOwner(request, res);
 
             expect(stub).calledOnceWith(body);
             expect(status).calledOnceWith(failed.status);
@@ -83,50 +86,60 @@ describe("PropertyController", () => {
         });
     });
 
-    describe("updateProperty", () => {
-        it("should call status and send service.putById() return value", async () => {
+    describe("updateOwner", () => {
+        before(() => {
             stub = sandBox
-                .stub(PropertyService.prototype, "putById")
+                .stub(OwnerService.prototype, "putById")
                 .resolves(resolved);
+        });
 
+        after(() => {
+            stub.restore();
+        });
+        it("should call status and send service.putById() return value", async () => {
+            stub.resolves(resolved);
             const body = {
-                property_id: "1",
+                owner_id: "1",
             };
             let request = createRequest({
                 body,
             });
 
-            await controller.updateProperty(request, res);
+            await controller.updateOwner(request, res);
 
-            expect(stub).calledOnceWith(body.property_id, body);
+            expect(stub).calledOnceWith(body.owner_id, body);
 
             expect(status).calledOnceWith(resolved.status);
             expect(send).calledOnceWith(resolved.data);
         });
 
         it("when response failed send error", async () => {
-            stub = sandBox
-                .stub(PropertyService.prototype, "putById")
-                .resolves(failed);
-
+            stub.resolves(failed);
             const body = {
                 id: "1",
             };
             let request = createRequest({
                 body,
             });
-            await controller.updateProperty(request, res);
+            await controller.updateOwner(request, res);
 
             expect(status).calledOnceWith(failed.status);
             expect(send).calledOnceWith(failed.error);
         });
     });
 
-    describe("getProperty", () => {
-        it("should call status and send service.getById() return value", async () => {
+    describe("getOwner", () => {
+        before(() => {
             stub = sandBox
-                .stub(PropertyService.prototype, "getById")
+                .stub(OwnerService.prototype, "getById")
                 .resolves(resolved);
+        });
+
+        after(() => {
+            stub.restore();
+        });
+        it("should call status and send service.getById() return value", async () => {
+            stub.resolves(resolved);
 
             const params = {
                 id: "1",
@@ -135,7 +148,7 @@ describe("PropertyController", () => {
                 params,
             });
 
-            await controller.getProperty(request, res);
+            await controller.getOwner(request, res);
 
             expect(stub).calledOnceWith(params.id);
 
@@ -144,9 +157,7 @@ describe("PropertyController", () => {
         });
 
         it("when response failed send error", async () => {
-            stub = sandBox
-                .stub(PropertyService.prototype, "putById")
-                .resolves(failed);
+            stub.resolves(failed);
 
             const body = {
                 id: "1",
@@ -154,18 +165,25 @@ describe("PropertyController", () => {
             let request = createRequest({
                 body,
             });
-            await controller.updateProperty(request, res);
+            await controller.getOwner(request, res);
 
             expect(status).calledOnceWith(failed.status);
             expect(send).calledOnceWith(failed.error);
         });
     });
 
-    describe("listProperties", () => {
-        it("should call status and send service.list() return value", async () => {
+    describe("listOwner", () => {
+        before(() => {
             stub = sandBox
-                .stub(PropertyService.prototype, "list")
+                .stub(OwnerService.prototype, "list")
                 .resolves(resolved);
+        });
+
+        after(() => {
+            stub.restore();
+        });
+        it("should call status and send service.list() return value", async () => {
+            stub.resolves(resolved);
 
             const body = {
                 id: "1",
@@ -174,7 +192,7 @@ describe("PropertyController", () => {
                 body,
             });
 
-            await controller.listProperties(request, res);
+            await controller.listOwners(request, res);
 
             expect(stub).calledOnceWith();
 
@@ -183,9 +201,7 @@ describe("PropertyController", () => {
         });
 
         it("when response failed send error", async () => {
-            stub = sandBox
-                .stub(PropertyService.prototype, "list")
-                .resolves(failed);
+            stub.resolves(failed);
 
             const body = {
                 id: "1",
@@ -193,46 +209,51 @@ describe("PropertyController", () => {
             let request = createRequest({
                 body,
             });
-            await controller.listProperties(request, res);
+            await controller.listOwners(request, res);
 
             expect(status).calledOnceWith(failed.status);
             expect(send).calledOnceWith(failed.error);
         });
     });
 
-    describe("deleteProperty", () => {
-        it("should call status and send service.deleteById() return value", async () => {
+    describe("deleteOwner", () => {
+        before(() => {
             stub = sandBox
-                .stub(PropertyService.prototype, "deleteById")
+                .stub(OwnerService.prototype, "deleteById")
                 .resolves(resolved);
+        });
+
+        after(() => {
+            stub.restore();
+        });
+        it("should call status and send service.deleteById() return value", async () => {
+            stub.resolves(resolved);
 
             const body = {
-                property_id: 1,
+                owner_id: 1,
             };
             let request = createRequest({
                 body,
             });
 
-            await controller.deleteProperty(request, res);
+            await controller.deleteOwner(request, res);
 
-            expect(stub).calledOnceWith(body.property_id);
+            expect(stub).calledOnceWith(body.owner_id);
 
             expect(status).calledOnceWith(resolved.status);
             expect(send).calledOnceWith(resolved.data);
         });
 
         it("when response failed send error", async () => {
-            stub = sandBox
-                .stub(PropertyService.prototype, "deleteById")
-                .resolves(failed);
+            stub.resolves(failed);
 
             const body = {
-                id: "1",
+                owner_id: "1",
             };
             let request = createRequest({
                 body,
             });
-            await controller.deleteProperty(request, res);
+            await controller.deleteOwner(request, res);
 
             expect(status).calledOnceWith(failed.status);
             expect(send).calledOnceWith(failed.error);

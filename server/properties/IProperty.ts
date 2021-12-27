@@ -2,7 +2,10 @@ import { IAddress } from "../common/IAddress";
 
 export interface IProperty {
     id?: string;
-    address: IAddress;
+    street: string;
+    city: string;
+    state: string;
+    zip_code: string;
     owner_name: string;
     owner_email: string;
     owner_entity: string;
