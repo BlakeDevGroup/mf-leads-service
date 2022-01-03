@@ -10,7 +10,7 @@ export default class PropertyQuery implements IQuery {
     }
 
     async create(property: IProperty): Promise<string> {
-        const sql = `INSERT INTO "${this.tableName}" (city, state, street, zip_code, units) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+        const sql = `INSERT INTO "${this.tableName}" (city, state, street, zip_code, units, owner_email, owner_entity, owner_name, owner_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`;
 
         const { rows } = await query(sql, [
             property.city,
@@ -18,6 +18,10 @@ export default class PropertyQuery implements IQuery {
             property.street,
             property.zip_code,
             property.units,
+            property.owner_email,
+            property.owner_entity,
+            property.owner_name,
+            property.owner_number,
         ]);
         return rows[0];
     }
@@ -44,7 +48,7 @@ export default class PropertyQuery implements IQuery {
     }
 
     async update(id: string, property: Partial<IProperty>): Promise<IProperty> {
-        const sql = `UPDATE "${this.tableName}" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5 WHERE id = $6 RETURNING *`;
+        const sql = `UPDATE "${this.tableName}" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, owner_entity = $6, owner_name = $7, owner_number = $8, owner_email = $9 WHERE id = $10 RETURNING *`;
 
         const { rows } = await query(sql, [
             property.city,
@@ -52,6 +56,10 @@ export default class PropertyQuery implements IQuery {
             property.street,
             property.zip_code,
             property.units,
+            property.owner_entity,
+            property.owner_name,
+            property.owner_number,
+            property.owner_email,
             id,
         ]);
 
