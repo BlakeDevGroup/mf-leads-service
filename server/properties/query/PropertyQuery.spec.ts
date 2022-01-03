@@ -45,7 +45,7 @@ describe("Property Query", () => {
     });
 
     it("should run create with proper statement and return entity", async () => {
-        const sql = `INSERT INTO "properties" (city, state, street, zip_code, units) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+        const sql = `INSERT INTO "properties" (city, state, street, zip_code, units, owner_email, owner_entity, owner_name, owner_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`;
 
         const result = await query.create(property);
 
@@ -55,6 +55,10 @@ describe("Property Query", () => {
             property.street,
             property.zip_code,
             property.units,
+            property.owner_email,
+            property.owner_entity,
+            property.owner_name,
+            property.owner_number,
         ]);
 
         expect(result).to.equal("returnValue");
@@ -87,7 +91,7 @@ describe("Property Query", () => {
     });
 
     it("should call query with proper sql and return value", async () => {
-        const sql = `UPDATE "properties" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5 WHERE id = $6 RETURNING *`;
+        const sql = `UPDATE "properties" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, owner_entity = $6, owner_name = $7, owner_number = $8, owner_email = $9 WHERE id = $10 RETURNING *`;
 
         const result = await query.update("1", property);
 
@@ -97,6 +101,10 @@ describe("Property Query", () => {
             property.street,
             property.zip_code,
             property.units,
+            property.owner_entity,
+            property.owner_name,
+            property.owner_number,
+            property.owner_email,
             "1",
         ]);
 
