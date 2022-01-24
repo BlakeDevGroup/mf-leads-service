@@ -20,6 +20,8 @@ const PROPERTY_DATA: IProperty = {
     owner_entity: "",
     units: 0,
     notes: [],
+    purchase_price: 0,
+    purchase_date: "10-24-2022",
 };
 const TABLE_NAME = "properties";
 describe("PropertyDAO", () => {

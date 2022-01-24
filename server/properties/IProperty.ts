@@ -12,4 +12,6 @@ export interface IProperty {
     owner_number: string;
     units: number;
     notes: string[];
+    purchase_price: number;
+    purchase_date: string;
 }

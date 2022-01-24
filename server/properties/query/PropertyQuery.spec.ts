@@ -1,5 +1,5 @@
 import sinonChai from "sinon-chai";
-import sinon, { mock, SinonSandbox, SinonSpy, SinonStub } from "sinon";
+import sinon, { SinonSandbox, SinonStub } from "sinon";
 import chai, { expect } from "chai";
 import PropertyQuery from "./PropertyQuery";
 import { IProperty } from "../IProperty";
@@ -21,6 +21,8 @@ const property: IProperty = {
     owner_name: "asdf",
     owner_number: "asdf",
     units: 1,
+    purchase_price: 10,
+    purchase_date: "10-24-2021",
 };
 
 describe("Property Query", () => {
@@ -45,7 +47,7 @@ describe("Property Query", () => {
     });
 
     it("should run create with proper statement and return entity", async () => {
-        const sql = `INSERT INTO "properties" (city, state, street, zip_code, units, owner_email, owner_entity, owner_name, owner_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`;
+        const sql = `INSERT INTO "properties" (city, state, street, zip_code, units, owner_email, owner_entity, owner_name, owner_number, purchase_price, purchase_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id`;
 
         const result = await query.create(property);
 
@@ -59,6 +61,8 @@ describe("Property Query", () => {
             property.owner_entity,
             property.owner_name,
             property.owner_number,
+            property.purchase_price,
+            property.purchase_date,
         ]);
 
         expect(result).to.equal("returnValue");
@@ -91,7 +95,7 @@ describe("Property Query", () => {
     });
 
     it("should call query with proper sql and return value", async () => {
-        const sql = `UPDATE "properties" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, owner_entity = $6, owner_name = $7, owner_number = $8, owner_email = $9 WHERE id = $10 RETURNING *`;
+        const sql = `UPDATE "properties" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, owner_entity = $6, owner_name = $7, owner_number = $8, owner_email = $9, purchase_price = $10, purchase_date = $11 WHERE id = $12 RETURNING *`;
 
         const result = await query.update("1", property);
 
@@ -105,6 +109,8 @@ describe("Property Query", () => {
             property.owner_name,
             property.owner_number,
             property.owner_email,
+            property.purchase_price,
+            property.purchase_date,
             "1",
         ]);
 
