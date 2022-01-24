@@ -21,7 +21,7 @@ export default class PropertyDAO implements IQuery {
         return this.query.read(id);
     }
 
-    async readAll(): Promise<any> {
+    async readAll(): Promise<IProperty[]> {
         return this.query.readAll();
     }
 

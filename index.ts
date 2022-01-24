@@ -11,6 +11,8 @@ import OwnerRouter from "./server/owners/routes/OwnerRoutes";
 import { loadPropertyData } from "./server/data/LoadMockPropertyData";
 import { loadNotesData } from "./server/data/LoadMockNoteData";
 import NoteController from "./server/notes/controllers/NoteController";
+// import { ownersFromPropertyData } from "./server/common/excel-import/ExcelImport";
+import { readXLS } from "./server/common/excel-import/ExcelImport";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -57,6 +59,7 @@ app.use("/owner", OwnerRouter);
 const noteController = new NoteController();
 app.get("/note", noteController.getAllNotes.bind(noteController));
 
+// readXLS("./server/data/MasterList.xlsx");
 server.listen(PORT, () => {
     console.log(RUNNING_MESSAGE);
 });
