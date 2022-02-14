@@ -17,6 +17,8 @@ OwnerRouter.use("/:id*", (req: Request, res, next) => {
 OwnerRouter.get("/:id", ownerController.getOwner.bind(ownerController));
 OwnerRouter.put("/:id", ownerController.updateOwner.bind(ownerController));
 OwnerRouter.delete("/:id", ownerController.deleteOwner.bind(ownerController));
+
 OwnerRouter.get("/:id/properties", propertyController.getPropertiesByOwnerId.bind(propertyController));
+
 
 export default OwnerRouter;

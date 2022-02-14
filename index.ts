@@ -18,7 +18,7 @@ const server: http.Server = http.createServer(app);
 const PORT = process.env.PORT || 3500;
 const RUNNING_MESSAGE = `Server running at http://localhost:${PORT}`;
 
-bcrypt.hash("user", 10, (err, hash) => {
+bcrypt.hash("cvpa2022", 10, (err, hash) => {
     DBMock["users"].push({
         created_date: new Date().toDateString(),
         modified_on: "",

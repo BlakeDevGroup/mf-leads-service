@@ -27,6 +27,7 @@ const PROPERTY_DATA: IProperty = {
     units: 0,
     purchase_date: new Date(),
     purchase_price: 500
+
 };
 const ID = "1";
 const ERROR = new Error("ERROR");

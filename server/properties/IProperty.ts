@@ -13,4 +13,5 @@ export interface IProperty {
     units?: number;
     purchase_price?: number;
     purchase_date?: Date;
+
 }
