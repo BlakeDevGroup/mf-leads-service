@@ -14,14 +14,14 @@ const PROPERTY_DATA: IProperty = {
     state: "",
     street: "",
     zip_code: "",
-    owner_name: "",
-    owner_email: "",
-    owner_number: "",
-    owner_entity: "",
+    name: "",
+    email: "",
+    number: "",
+    entity: "",
     units: 0,
-    notes: [],
-    purchase_price: 0,
-    purchase_date: "10-24-2022",
+    purchase_date: new Date(),
+    purchase_price: 500,
+
 };
 const TABLE_NAME = "properties";
 describe("PropertyDAO", () => {
