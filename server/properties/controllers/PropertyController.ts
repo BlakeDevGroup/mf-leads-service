@@ -56,4 +56,14 @@ export default class PropertyController {
             res.status(result.status).json(result.error);
         }
     }
+
+    async getPropertiesByOwnerId(req: Request, res: Response) {
+        const result: any = await this.service.getByOwnerId(req.params.id);
+
+        if (result.data) {
+            res.status(result.status).json(result.data);
+        } else {
+            res.status(result.status).json(result.error);
+        }
+    }
 }

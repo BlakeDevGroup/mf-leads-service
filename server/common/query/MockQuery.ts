@@ -1,6 +1,8 @@
 import { IQuery } from "../IQuery";
 import DBMock, { DBTableNotFoundError } from "../mocks/DBMock";
 import { uuid } from "uuidv4";
+import fs from "fs";
+import path from "path";
 
 export default class MockQuery implements IQuery {
     private table: any[];
@@ -19,7 +21,7 @@ export default class MockQuery implements IQuery {
         this.table.push(Object.assign({}, resource, { id: id }));
 
         this.writeToDB();
-        return id;
+        return Object.assign({}, resource, { id: id });
     }
 
     async delete(id: string): Promise<any> {
@@ -51,10 +53,21 @@ export default class MockQuery implements IQuery {
     }
 
     async readBy(property: string, value: string): Promise<any> {
-        return this.table.filter((entry) => entry[property] == value)[0];
+        return this.table.filter((entry) => entry[property] == value);
     }
 
     private writeToDB() {
         DBMock[this.tableName] = this.table;
+        const folderPath = path.join(
+            __dirname,
+            `../../data/${this.tableName}.live.json`
+        );
+        if (process.env.NODE_ENV !== "test") {
+            fs.writeFile(
+                folderPath,
+                JSON.stringify(DBMock[this.tableName]),
+                () => {}
+            );
+        }
     }
 }

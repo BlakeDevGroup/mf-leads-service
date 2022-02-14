@@ -8,7 +8,7 @@ import MessageService from "../../common/message/MessageService";
 import LogService from "../../common/logging/LoggingService";
 
 chai.use(sinonChai);
-let spy: sinon.SinonSpy;
+let stub: sinon.SinonStub;
 let spySuccess: sinon.SinonSpy;
 let spyFailure: sinon.SinonSpy;
 let spyLog: sinon.SinonSpy;
@@ -16,18 +16,17 @@ let sandbox: sinon.SinonSandbox;
 let service: PropertyService;
 
 const PROPERTY_DATA: IProperty = {
-    address: {
-        city: "",
-        state: "",
-        street: "",
-        zip_code: "",
-    },
-    owner_name: "",
-    owner_email: "",
-    owner_number: "",
-    owner_entity: "",
+    city: "",
+    state: "",
+    street: "",
+    zip_code: "",
+    name: "",
+    email: "",
+    number: "",
+    entity: "",
     units: 0,
-    notes: [],
+    purchase_date: new Date(),
+    purchase_price: 500
 };
 const ID = "1";
 const ERROR = new Error("ERROR");
@@ -52,107 +51,120 @@ describe("PropertyService", () => {
     });
 
     describe("add", () => {
-        it("when an error is thrown then catch error and send failure", async () => {
-            let stub = sandbox
-                .stub(PropertyDao.prototype, "create")
-                .throws(ERROR);
-
-            await service.add(PROPERTY_DATA);
-
-            expect(spyFailure).to.have.been.calledOnceWith(500, ERROR);
-
-            stub.restore();
+        before(() => {
+            stub = sandbox.stub(PropertyDao.prototype, "create");
         });
 
-        it("should send success with status 201 and dao.create() return value", async () => {
-            spy = sandbox.spy(PropertyDao.prototype, "create");
+        afterEach(() => {
+            stub.resetHistory();
+        });
+        it("when an error is thrown then catch error and send failure", async () => {
+            stub.throws(ERROR);
 
             const result = await service.add(PROPERTY_DATA);
 
-            expect(spySuccess).calledOnceWith(201, await spy.returnValues[0]);
+            expect(stub).calledOnceWith(PROPERTY_DATA);
+            expect(spyFailure).to.have.been.calledOnceWith(500, ERROR.message);
 
-            expect(result)
-                .to.be.an("object")
-                .and.include.keys("status", "data");
-            beforeEach;
+            expect(result).to.equal(spyFailure.returnValues[0]);
+        });
+
+        it("should send success with status 201 and dao.create() return value", async () => {
+            stub.resolves(PROPERTY_DATA);
+            const result = await service.add(PROPERTY_DATA);
+
+            expect(spySuccess).calledOnceWith(201, PROPERTY_DATA);
+
+            expect(result).to.equal(spySuccess.returnValues[0]);
         });
     });
 
     describe("list", () => {
-        it("when an error is thrown then catch error and send failure", async () => {
-            let stub = sandbox
-                .stub(PropertyDao.prototype, "readAll")
-                .throws(ERROR);
+        before(() => {
+            stub = sandbox.stub(PropertyDao.prototype, "readAll");
+        });
 
-            await service.list(100, 10);
-            expect(spyFailure).calledOnceWith(500, ERROR);
-            stub.restore();
+        afterEach(() => {
+            stub.resetHistory();
+        });
+        it("when an error is thrown then catch error and send failure", async () => {
+            stub.throws(ERROR);
+            const result = await service.list(100, 10);
+
+            expect(stub).calledOnceWith();
+            expect(spyFailure).calledOnceWith(500, ERROR.message);
+            expect(result).to.equal(spyFailure.returnValues[0]);
         });
 
         it("should send success with status 200 and doa.readall() return value", async () => {
-            spy = sandbox.spy(PropertyDao.prototype, "readAll");
+            stub.resolves(PROPERTY_DATA);
 
             const result = await service.list(100, 10);
 
-            expect(spySuccess).calledOnceWith(200, await spy.returnValues[0]);
-            expect(result).to.be.an("object").with.keys("data", "status");
+            expect(spySuccess).calledOnceWith(200, PROPERTY_DATA);
+            expect(result).to.equal(spySuccess.returnValues[0]);
         });
     });
 
     describe("putById", () => {
+        before(() => {
+            stub = sandbox.stub(PropertyDao.prototype, "update");
+        });
+
+        afterEach(() => {
+            stub.resetHistory();
+        });
         it("when an error is thrown then catch error and send failure", async () => {
-            let stub = sandbox
-                .stub(PropertyDao.prototype, "update")
-                .throws(ERROR);
+            stub.throws(ERROR);
 
             const result = await service.putById(ID, PROPERTY_DATA);
 
-            expect(spyFailure).calledOnceWith(500, ERROR);
-            stub.restore();
+            expect(stub).calledOnceWith(ID, PROPERTY_DATA);
+            expect(spyFailure).calledOnceWith(500, ERROR.message);
+            expect(result).to.equal(spyFailure.returnValues[0]);
         });
 
         it("should send success with status 200 and doa.update() return value", async () => {
-            spy = sandbox.spy(PropertyDao.prototype, "update");
+            stub.resolves(PROPERTY_DATA);
 
             const result = await service.putById(ID, PROPERTY_DATA);
 
-            expect(spySuccess).calledOnceWith(200, await spy.returnValues[0]);
+            expect(spySuccess).calledOnceWith(200, PROPERTY_DATA);
 
-            expect(result).to.be.an("object").with.keys("data", "status");
+            expect(result).to.equal(spySuccess.returnValues[0]);
         });
     });
 
     describe("getById", () => {
+        before(() => {
+            stub = sandbox.stub(PropertyDao.prototype, "read");
+        });
+
+        afterEach(() => {
+            stub.resetHistory();
+        });
         it("when an error is thrown then catch error and send failure", async () => {
-            let stub = sandbox
-                .stub(PropertyDao.prototype, "read")
-                .throws(ERROR);
+            stub.throws(ERROR);
 
             const result = await service.getById(ID);
 
-            expect(spyFailure).calledOnceWith(500, ERROR);
-
-            stub.restore();
+            expect(stub).calledOnceWith(ID);
+            expect(spyFailure).calledOnceWith(500, ERROR.message);
+            expect(result).to.equal(spyFailure.returnValues[0]);
         });
 
         it("should send success with status 200 and doa.read() return value", async () => {
-            spy = sandbox
-                .stub(PropertyDao.prototype, "read")
-                .resolves(PROPERTY_DATA);
+            stub.resolves(PROPERTY_DATA);
 
             const result = await service.getById(ID);
 
-            expect(spySuccess).calledWith(200, await spy.returnValues[0]);
+            expect(spySuccess).calledWith(200, PROPERTY_DATA);
 
-            expect(result).to.be.an("object").with.keys("data", "status");
-
-            spy.restore();
+            expect(result).to.equal(spySuccess.returnValues[0]);
         });
 
         it("when property is empty then send failure with status 404", async () => {
-            let stub = sandbox
-                .stub(PropertyDao.prototype, "read")
-                .resolves(undefined);
+            stub.resolves(undefined);
 
             const result = await service.getById(ID);
 
@@ -161,23 +173,26 @@ describe("PropertyService", () => {
                 `No property found with id: ${ID}`
             );
 
-            expect(result)
-                .to.be.an("object")
-                .and.include.keys("error", "status");
-
-            stub.restore();
+            expect(result).to.equal(spyFailure.returnValues[0]);
         });
     });
 
     describe("deleteById", () => {
+        before(() => {
+            stub = sandbox.stub(PropertyDao.prototype, "delete");
+        });
+
+        afterEach(() => {
+            stub.resetHistory();
+        });
         it("when an error is thrown then send failure with status 500", async () => {
-            let stub = sandbox
-                .stub(PropertyDao.prototype, "delete")
-                .throws(ERROR);
+            stub.throws(ERROR);
 
-            await service.deleteById(ID);
+            const result = await service.deleteById(ID);
 
-            expect(spyFailure).calledOnceWith(500, ERROR);
+            expect(stub).calledOnceWith(ID);
+            expect(spyFailure).calledOnceWith(500, ERROR.message);
+            expect(result).to.equal(spyFailure.returnValues[0]);
         });
 
         it("should delete property and send status 200", async () => {
@@ -187,9 +202,7 @@ describe("PropertyService", () => {
                 200,
                 `Successfully deleted property`
             );
-            expect(result)
-                .to.be.an("object")
-                .and.include.keys("data", "status");
+            expect(result).to.equal(spySuccess.returnValues[0]);
         });
     });
 });

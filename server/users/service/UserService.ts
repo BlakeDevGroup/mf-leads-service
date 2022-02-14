@@ -13,9 +13,9 @@ export default class UserService {
         username: string,
         password: string
     ): Promise<ResponsePayload> {
-        const user: IUser = await this.dao.readBy("user_name", username);
+        const user: IUser[] = await this.dao.readBy("user_name", username);
 
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+        if (!user[0] || !(await bcrypt.compare(password, user[0].password))) {
             return MessageService.sendFailure(
                 400,
                 "username or password does not match"
@@ -31,7 +31,7 @@ export default class UserService {
 
         return MessageService.sendSuccess(
             200,
-            jwt.sign(user, process.env.SECRET)
+            jwt.sign(user[0], process.env.SECRET)
         );
     }
 }

@@ -14,7 +14,9 @@ export default class UserController {
         if (result.error) {
             res.status(result.status).json(result.error);
         } else {
-            res.status(result.status).json(result.data);
+            res.status(result.status)
+                .cookie("token", result.data)
+                .json(result.data);
         }
     }
 }

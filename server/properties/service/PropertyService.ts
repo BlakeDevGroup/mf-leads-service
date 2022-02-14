@@ -14,7 +14,7 @@ export default class PropertyService implements IService {
 
             return MessageService.sendSuccess(200, properties);
         } catch (e: any) {
-            return MessageService.sendFailure(500, e);
+            return MessageService.sendFailure(500, e.message);
         }
     }
     async add(resource: IProperty): Promise<ResponsePayload> {
@@ -23,7 +23,7 @@ export default class PropertyService implements IService {
 
             return MessageService.sendSuccess(201, property);
         } catch (e: any) {
-            return MessageService.sendFailure(500, e);
+            return MessageService.sendFailure(500, e.message);
         }
     }
     async putById(id: string, resource: IProperty): Promise<ResponsePayload> {
@@ -32,7 +32,7 @@ export default class PropertyService implements IService {
 
             return MessageService.sendSuccess(200, property);
         } catch (e: any) {
-            return MessageService.sendFailure(500, e);
+            return MessageService.sendFailure(500, e.message);
         }
     }
     async getById(id: string): Promise<ResponsePayload> {
@@ -46,7 +46,7 @@ export default class PropertyService implements IService {
                 );
             return MessageService.sendSuccess(200, property);
         } catch (e: any) {
-            return MessageService.sendFailure(500, e);
+            return MessageService.sendFailure(500, e.message);
         }
     }
     async deleteById(id: string): Promise<any> {
@@ -58,7 +58,22 @@ export default class PropertyService implements IService {
                 "Successfully deleted property"
             );
         } catch (e: any) {
-            return MessageService.sendFailure(500, e);
+            return MessageService.sendFailure(500, e.message);
+        }
+    }
+
+    async getByOwnerId(owner_id: string): Promise<any> {
+        try {
+            const properties = await this.dao.readPropertiesByOwnerId(owner_id);
+
+            if (!properties)
+                return MessageService.sendFailure(
+                    404,
+                    `No properties found with owner_id: ${owner_id}`
+                );
+            return MessageService.sendSuccess(200, properties);
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e.message);
         }
     }
 }

@@ -6,11 +6,11 @@ import MessageService, {
 } from "../../common/message/MessageService";
 import LogService from "../../common/logging/LoggingService";
 
-export default class NoteService implements IService {
+export default class NoteService {
     private dao: NoteDao = new NoteDao();
-    async list(linit: number, page: number): Promise<ResponsePayload> {
+    async list(property_id: string): Promise<ResponsePayload> {
         try {
-            const notes = await this.dao.readAll();
+            const notes = await this.dao.readNotesByPropertyId(property_id);
 
             return MessageService.sendSuccess(200, notes);
         } catch (e: any) {
@@ -54,6 +54,16 @@ export default class NoteService implements IService {
             await this.dao.delete(id);
 
             return MessageService.sendSuccess(200, "Successfully deleted note");
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e);
+        }
+    }
+
+    async getAll() {
+        try {
+            const notes = await this.dao.readAll();
+
+            return MessageService.sendSuccess(200, notes);
         } catch (e: any) {
             return MessageService.sendFailure(500, e);
         }

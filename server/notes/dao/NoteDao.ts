@@ -1,8 +1,8 @@
 import { INote } from "../INote";
 import { IQuery } from "../../common/IQuery";
-import Query from "../../common/query/Query";
+import Query from "../query/NoteQuery";
 
-export default class NoteDAO implements IQuery {
+export default class NoteDAO {
     private query: IQuery = new Query("notes");
 
     async create(note: INote) {
@@ -26,5 +26,9 @@ export default class NoteDAO implements IQuery {
 
     async readBy(property: string, value: string): Promise<any> {
         return this.query.readBy(property, value);
+    }
+
+    async readNotesByPropertyId(property_id: string) {
+        return this.query.readBy("property_id", property_id);
     }
 }

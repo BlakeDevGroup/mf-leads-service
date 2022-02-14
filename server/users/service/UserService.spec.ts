@@ -72,12 +72,11 @@ describe("UserService", () => {
             await service.authenticate("asdf", "asdf");
 
             expect(spySuccess).calledOnce;
+
+            const user = await service.dao.readBy("user_name", "asdf");
             expect(spySuccess).calledOnceWith(
                 200,
-                jwt.sign(
-                    await service.dao.readBy("user_name", "asdf"),
-                    process.env.SECRET
-                )
+                jwt.sign(user[0], process.env.SECRET)
             );
         });
     });

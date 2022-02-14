@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-// import { INote } from "../INote";
-import NoteService from "../service/NoteService";
+import { ResponsePayload } from "../../common/message/MessageService";
+import OwnerService from "../service/OwnerService";
 
-export default class NoteController {
-    private service: NoteService = new NoteService();
+export default class OwnerController {
+    private service: OwnerService = new OwnerService();
 
-    async createNote(req: Request, res: Response) {
+    async createOwner(req: Request, res: Response) {
         const result: any = await this.service.add(req.body);
 
         if (result.data) {
@@ -15,9 +15,9 @@ export default class NoteController {
         }
     }
 
-    async updateNote(req: Request, res: Response) {
+    async updateOwner(req: Request, res: Response) {
         const result: any = await this.service.putById(
-            req.body.note_id,
+            req.body.owner_id,
             req.body
         );
 
@@ -28,8 +28,8 @@ export default class NoteController {
         }
     }
 
-    async getNote(req: Request, res: Response) {
-        const result: any = await this.service.getById(req.params.note_id);
+    async getOwner(req: Request, res: Response) {
+        const result: any = await this.service.getById(req.params.id);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -38,8 +38,8 @@ export default class NoteController {
         }
     }
 
-    async listNote(req: Request, res: Response) {
-        const result: any = await this.service.list(req.body.property_id);
+    async listOwners(req: Request, res: Response) {
+        const result: any = await this.service.list(100, 10);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -48,18 +48,8 @@ export default class NoteController {
         }
     }
 
-    async deleteNote(req: Request, res: Response) {
-        const result: any = await this.service.deleteById(req.body.note_id);
-
-        if (result.data) {
-            res.status(result.status).json(result.data);
-        } else {
-            res.status(result.status).json(result.error);
-        }
-    }
-
-    async getAllNotes(req: Request, res: Response) {
-        const result: any = await this.service.getAll();
+    async deleteOwner(req: Request, res: Response) {
+        const result: any = await this.service.deleteById(req.body.owner_id);
 
         if (result.data) {
             res.status(result.status).json(result.data);
