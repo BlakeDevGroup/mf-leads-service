@@ -6,6 +6,7 @@ export interface IProperty {
     city: string;
     state: string;
     zip_code: string;
+    owner_id?: string;
     name?: string;
     email?: string;
     entity?: string;
@@ -13,5 +14,4 @@ export interface IProperty {
     units?: number;
     purchase_price?: number;
     purchase_date?: Date;
-
 }

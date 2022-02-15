@@ -72,7 +72,7 @@ export default class PropertyQuery implements IQuery {
     }
     async readBy(property: string, value: string): Promise<IProperty[]> {
 
-        const sql = `SELECT * FROM "PropertyView" WHERE ${property} = "${value}"`;
+        const sql = `SELECT * FROM "PropertyView" WHERE ${property} = '${value}'`;
 
         const { rows } = await query(sql, []);
 
