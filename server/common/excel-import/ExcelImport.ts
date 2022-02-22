@@ -45,7 +45,7 @@ export const readXLS = (filePath: string) => {
         const temp = reader.utils.sheet_to_json(
             file.Sheets[file.SheetNames[i]]
         );
-        temp.forEach((res) => {
+        temp.forEach((res: any) => {
             data.push(res);
         });
     }
