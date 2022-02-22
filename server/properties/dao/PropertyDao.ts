@@ -23,7 +23,7 @@ export default class PropertyDAO {
         return this.query.read(id);
     }
 
-    async readAll(): Promise<any> {
+    async readAll(): Promise<IProperty[]> {
         return this.query.readAll();
     }
 
