@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ResponsePayload } from "../../common/message/MessageService";
 import OwnerService from "../service/OwnerService";
 
 export default class OwnerController {
@@ -29,7 +28,7 @@ export default class OwnerController {
     }
 
     async getOwner(req: Request, res: Response) {
-        const result: any = await this.service.getById(req.params.id);
+        const result: any = await this.service.getById(req.params.owner_id);
 
         if (result.data) {
             res.status(result.status).json(result.data);
