@@ -6,12 +6,13 @@ export interface IProperty {
     city: string;
     state: string;
     zip_code: string;
-    owner_name: string;
-    owner_email: string;
-    owner_entity: string;
-    owner_number: string;
-    units: number;
-    notes: string[];
-    purchase_price: number;
-    purchase_date: string;
+    owner_id?: string;
+    name?: string;
+    email?: string;
+    entity?: string;
+    number?: string;
+    units?: number;
+    purchase_price?: number;
+    purchase_date?: Date;
+    owner_id?: string;
 }

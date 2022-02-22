@@ -23,7 +23,7 @@ const testQuery = async (text: string, params: any) => {
 export function query(text: string, params: any): any {
     if (
         process.env.NODE_ENV?.toUpperCase() == "DEVELOPMENT" ||
-        process.env.NODE_ENV?.toUpperCase() == "PRODUCTION"
+        process.env.NODE_ENV?.toUpperCase() == "PRODUCTION"  
     )
         return pool.query(text, params);
 

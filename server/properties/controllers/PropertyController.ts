@@ -28,7 +28,7 @@ export default class PropertyController {
     }
 
     async getProperty(req: Request, res: Response) {
-        const result: any = await this.service.getById(req.params.id);
+        const result: any = await this.service.getById(req.params.property_id);
 
         if (result.data) {
             res.status(result.status).json(result.data);
@@ -49,6 +49,18 @@ export default class PropertyController {
 
     async deleteProperty(req: Request, res: Response) {
         const result: any = await this.service.deleteById(req.body.property_id);
+
+        if (result.data) {
+            res.status(result.status).json(result.data);
+        } else {
+            res.status(result.status).json(result.error);
+        }
+    }
+
+    async getPropertiesByOwnerId(req: Request, res: Response) {
+        const result: any = await this.service.getByOwnerId(
+            req.params.owner_id
+        );
 
         if (result.data) {
             res.status(result.status).json(result.data);

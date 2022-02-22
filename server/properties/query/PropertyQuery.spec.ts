@@ -1,5 +1,7 @@
 import sinonChai from "sinon-chai";
-import sinon, { SinonSandbox, SinonStub } from "sinon";
+
+import sinon, { mock, SinonSandbox, SinonSpy, SinonStub } from "sinon";
+
 import chai, { expect } from "chai";
 import PropertyQuery from "./PropertyQuery";
 import { IProperty } from "../IProperty";
@@ -15,14 +17,14 @@ const property: IProperty = {
     state: "adsf",
     street: "asdf",
     zip_code: "asdf",
-    notes: [],
-    owner_email: "asdf",
-    owner_entity: "asdf",
-    owner_name: "asdf",
-    owner_number: "asdf",
+    email: "asdf",
+    entity: "asdf",
+    name: "asdf",
+    number: "asdf",
     units: 1,
-    purchase_price: 10,
-    purchase_date: "10-24-2021",
+    purchase_date: new Date(),
+    purchase_price: 500,
+
 };
 
 describe("Property Query", () => {
@@ -47,7 +49,9 @@ describe("Property Query", () => {
     });
 
     it("should run create with proper statement and return entity", async () => {
-        const sql = `INSERT INTO "properties" (city, state, street, zip_code, units, owner_email, owner_entity, owner_name, owner_number, purchase_price, purchase_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id`;
+
+        const sql = `INSERT INTO "properties" (city, state, street, zip_code, units, owner_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+
 
         const result = await query.create(property);
 
@@ -57,12 +61,13 @@ describe("Property Query", () => {
             property.street,
             property.zip_code,
             property.units,
-            property.owner_email,
-            property.owner_entity,
-            property.owner_name,
-            property.owner_number,
+            property.email,
+            property.entity,
+            property.name,
+            property.number,
             property.purchase_price,
             property.purchase_date,
+
         ]);
 
         expect(result).to.equal("returnValue");
@@ -77,7 +82,9 @@ describe("Property Query", () => {
     });
 
     it("should call query with proper sql and retur value", async () => {
-        const sql = `SELECT * FROM "properties" WHERE id = $1`;
+
+        const sql = `SELECT * FROM "PropertyView" WHERE id = $1`;
+
 
         const result = await query.read("1");
 
@@ -87,7 +94,9 @@ describe("Property Query", () => {
     });
 
     it("should call query with proper sql and return Value", async () => {
-        const sql = `SELECT * FROM "properties"`;
+
+        const sql = `SELECT * FROM "PropertyView"`;
+
 
         const result = await query.readAll();
 
@@ -95,7 +104,8 @@ describe("Property Query", () => {
     });
 
     it("should call query with proper sql and return value", async () => {
-        const sql = `UPDATE "properties" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, owner_entity = $6, owner_name = $7, owner_number = $8, owner_email = $9, purchase_price = $10, purchase_date = $11 WHERE id = $12 RETURNING *`;
+
+        const sql = `UPDATE "properties" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, entity = $6, name = $7, number = $8, email = $9, purchase_price = $10, purchase_date = $11 WHERE id = $12 RETURNING *`;
 
         const result = await query.update("1", property);
 
@@ -105,10 +115,10 @@ describe("Property Query", () => {
             property.street,
             property.zip_code,
             property.units,
-            property.owner_entity,
-            property.owner_name,
-            property.owner_number,
-            property.owner_email,
+            property.entity,
+            property.name,
+            property.number,
+            property.email,
             property.purchase_price,
             property.purchase_date,
             "1",
@@ -118,7 +128,8 @@ describe("Property Query", () => {
     });
 
     it("should call query with proper sql and return value", async () => {
-        const sql = `SELECT * FROM "properties" WHERE asdf = "1234"`;
+
+        const sql = `SELECT * FROM "PropertyView" WHERE asdf = "1234"`;
 
         const result = await query.readBy("asdf", "1234");
 

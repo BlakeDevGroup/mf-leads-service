@@ -20,14 +20,13 @@ const PROPERTY_DATA: IProperty = {
     state: "",
     street: "",
     zip_code: "",
-    owner_name: "",
-    owner_email: "",
-    owner_number: "",
-    owner_entity: "",
+    name: "",
+    email: "",
+    number: "",
+    entity: "",
     units: 0,
-    notes: [],
-    purchase_date: "",
-    purchase_price: 200,
+    purchase_date: new Date(),
+    purchase_price: 500,
 };
 const ID = "1";
 const ERROR = new Error("ERROR");

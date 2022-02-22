@@ -15,24 +15,24 @@ PropertyRouter.post(
     propertyController.createProperty.bind(propertyController)
 );
 
-PropertyRouter.use("/:id*", (req: Request, res, next) => {
-    req.body.property_id = req.params.id;
+PropertyRouter.use("/:property_id*", (req: Request, res, next) => {
+    req.body.property_id = req.params.property_id;
     next();
 });
 
 PropertyRouter.get(
-    "/:id",
+    "/:property_id",
     propertyController.getProperty.bind(propertyController)
 );
 PropertyRouter.put(
-    "/:id",
+    "/:property_id",
     propertyController.updateProperty.bind(propertyController)
 );
 PropertyRouter.delete(
-    "/:id",
+    "/:property_id",
     propertyController.deleteProperty.bind(propertyController)
 );
 
-PropertyRouter.use("/:id/note", NoteRouter);
+PropertyRouter.use("/:property_id/note", NoteRouter);
 
 export default PropertyRouter;
