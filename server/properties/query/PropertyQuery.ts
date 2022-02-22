@@ -10,9 +10,7 @@ export default class PropertyQuery implements IQuery {
     }
 
     async create(property: IProperty): Promise<string> {
-
         const sql = `INSERT INTO "${this.tableName}" (city, state, street, zip_code, units, owner_id, purchase_price, purchase_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
-
 
         const { rows } = await query(sql, [
             property.city,
@@ -34,7 +32,6 @@ export default class PropertyQuery implements IQuery {
     }
 
     async read(id: string): Promise<IProperty> {
-
         const sql = `SELECT * FROM "PropertyView" WHERE id = $1`;
         const { rows } = await query(sql, [id]);
 
@@ -49,9 +46,7 @@ export default class PropertyQuery implements IQuery {
     }
 
     async update(id: string, property: Partial<IProperty>): Promise<IProperty> {
-
-        const sql = `UPDATE "${this.tableName}" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, entity = $6, name = $7, number = $8, email = $9, purchase_price = $10, purchase_date = $11 WHERE id = $12 RETURNING *`;
-
+        const sql = `UPDATE "${this.tableName}" SET city = $1, state = $2, street = $3, zip_code = $4, units = $5, purchase_price = $6, purchase_date = $7, owner_id = $8 WHERE id = $9 RETURNING *`;
 
         const { rows } = await query(sql, [
             property.city,
@@ -59,19 +54,15 @@ export default class PropertyQuery implements IQuery {
             property.street,
             property.zip_code,
             property.units,
-            property.entity,
-            property.name,
-            property.number,
-            property.email,
             property.purchase_price,
             property.purchase_date,
+            property.owner_id,
             id,
         ]);
 
         return rows[0];
     }
     async readBy(property: string, value: string): Promise<IProperty[]> {
-
         const sql = `SELECT * FROM "PropertyView" WHERE ${property} = '${value}'`;
 
         const { rows } = await query(sql, []);
