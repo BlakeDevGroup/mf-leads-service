@@ -12,7 +12,7 @@ import { loadPropertyData } from "./server/data/LoadMockPropertyData";
 import { loadNotesData } from "./server/data/LoadMockNoteData";
 import NoteController from "./server/notes/controllers/NoteController";
 // import { ownersFromPropertyData } from "./server/common/excel-import/ExcelImport";
-import { readXLS } from "./server/common/excel-import/ExcelImport";
+import { properyDataUpdate } from "./server/common/excel-import/ExcelImport";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);

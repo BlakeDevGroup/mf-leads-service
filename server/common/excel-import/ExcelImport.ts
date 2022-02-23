@@ -2,38 +2,58 @@ import PropertyDAO from "../../properties/dao/PropertyDao";
 import { query } from "../query/PostGresQuery";
 import reader from "xlsx";
 import fs from "fs";
+import { IOwner } from "../../owners/IOwner";
+import { IProperty } from "../../properties/IProperty";
 
 const dao = new PropertyDAO();
 
 export const ownersFromPropertyData = async () => {
     try {
-        const propertyData = await dao.readAll();
+        const { rows } = await query(`SELECT * FROM properties`, []);
 
-        const ownerData = propertyData.map((property) => {
+        const ownerData = rows.map((property: any) => {
             return {
-                owner_name: property.owner_name,
-                owner_entity: property.owner_entity,
-                owner_number: property.owner_number,
-                owner_email: property.owner_email,
+                name: property.owner_name,
+                entity: property.owner_entity,
+                phone_number: property.owner_number,
+                email: property.owner_email,
             };
         });
 
-        ownerData.forEach((owner) => {
-            query(
-                `INSERT INTO "owners" (name, email, entity, phone_number) VALUES ($1, $2, $3, $4) ON CONFLICT (name) DO NOTHING`,
-                [
-                    owner.owner_name,
-                    owner.owner_email,
-                    owner.owner_entity,
-                    owner.owner_number,
-                ]
-            );
-        });
+        var update = `UPDATE properties SET owner_id = (SELECT id from owners where phone_number = $2) WHERE id = $1`;
+        // if properties.owner_id == null
+
+        // ownerData.forEach((owner: IOwner) => {
+        //     query(
+        //         `INSERT INTO "owners" (name, email, entity, phone_number) VALUES ($1, $2, $3, $4) ON CONFLICT (phone_number) DO NOTHING`,
+        //         [owner.name, owner.email, owner.entity, owner.phone_number]
+        //     );
+        // });
     } catch (e: any) {
         console.log(e.message);
     }
 };
 
+export const properyDataUpdate = async () => {
+    const { rows } = await query(`SELECT * FROM properties`, []);
+    let onlyOwner = 0;
+    let phoenOwner = 0;
+    rows.map((property: any) => {
+        if (!property.owner_id) {
+            onlyOwner++;
+            console.log(property);
+        }
+        if (!property.owner_id && property.owner_number) {
+            phoenOwner++;
+            // query(
+            //     `UPDATE properties SET owner_id = (SELECT id from owners where phone_number = $2) WHERE id = $1`,
+            //     [property.id, property.owner_number]
+            // );
+        }
+    });
+    console.log("No Owner_ID: " + onlyOwner);
+    console.log("No Owner_ID and Phone#" + phoenOwner);
+};
 export const readXLS = (filePath: string) => {
     const file = reader.readFile(filePath);
 
@@ -74,12 +94,12 @@ export const readXLS = (filePath: string) => {
     //     );
     // });
 
-    data.forEach((input: any) => {
-        query(
-            `INSERT INTO "properties" (city, state, street, zip_code, units, owner_id) VALUES ($1, $2, $3, $4, $5, (select id from owners where name='${input.Owner}')) ON CONFLICT (street) DO NOTHING`,
-            [input.City, input.State, input.Street, input.Zip, input.Units]
-        );
-    });
+    // data.forEach((input: any) => {
+    //     query(
+    //         `INSERT INTO "properties" (city, state, street, zip_code, units, owner_id) VALUES ($1, $2, $3, $4, $5, (select id from owners where name='${input.Owner}')) ON CONFLICT (street) DO NOTHING`,
+    //         [input.City, input.State, input.Street, input.Zip, input.Units]
+    //     );
+    // });
     // query(
     //     `INSERT INTO "properties" (city, state, street, zip_code, units, owner_id) VALUES ($1, $2, $3, $4, $5, (select id from owners where name='${data[700].Owner}')) ON CONFLICT (street) DO NOTHING`,
     //     [
