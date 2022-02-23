@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "env-cmd -e test nyc --reporter=html mocha",
-        "start": "env-cmd -e production nodemon --watch ./ --ext ts --exec ts-node --ignore '*.spec.ts' --delay 1 index.ts --unhandled-rejections=strict ./dist/index.js",
+        "start": "env-cmd -e development nodemon --watch ./ --ext ts --exec ts-node --ignore '*.spec.ts' --delay 1 index.ts --unhandled-rejections=strict ./dist/index.js",
         "build": "tsc",
         "test-w": "env-cmd -e test mocha --watch"
     },
