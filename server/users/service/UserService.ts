@@ -34,4 +34,49 @@ export default class UserService {
             jwt.sign(user[0], process.env.SECRET)
         );
     }
+
+    async add(resource: IUser) {
+        try {
+            const user = await this.dao.create(resource);
+
+            return MessageService.sendSuccess(201, user);
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e.message);
+        }
+    }
+
+    async getById(id: string) {
+        try {
+            const user = await this.dao.read(id);
+
+            if (!user)
+                return MessageService.sendFailure(
+                    404,
+                    `No user found with id: ${id}`
+                );
+            return MessageService.sendSuccess(200, user);
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e.message);
+        }
+    }
+
+    async list(limit: number, page: number): Promise<any> {
+        try {
+            const users = await this.dao.readAll();
+
+            return MessageService.sendSuccess(200, users);
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e.message);
+        }
+    }
+
+    async deleteById(id: string) {
+        try {
+            await this.dao.delete(id);
+
+            return MessageService.sendSuccess(200, "Successfully deleted user");
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e.message);
+        }
+    }
 }
