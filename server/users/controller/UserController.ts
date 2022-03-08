@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { ResponsePayload } from "../../common/message/MessageService";
 import UserService from "../service/UserService";
-
+import * as argon2 from "argon2";
 export default class UserController {
     private service: UserService = new UserService();
 
     async authenticate(req: Request, res: Response) {
         const result: any = await this.service.authenticate(
-            req.body.user_name,
+            req.body.email,
             req.body.password
         );
 
@@ -22,6 +22,16 @@ export default class UserController {
 
     async createUser(req: Request, res: Response) {
         const result: any = await this.service.add(req.body);
+
+        if (result.data) {
+            res.status(result.status).json(result.data);
+        } else {
+            res.status(result.status).json(result.error);
+        }
+    }
+
+    async updateUser(req: Request, res: Response) {
+        const result: any = await this.service.putById(req.body.id, req.body);
 
         if (result.data) {
             res.status(result.status).json(result.data);

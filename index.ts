@@ -53,8 +53,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/property", PropertyRouter);
-app.use("/login", UserRouter);
+// app.use("/login", UserRouter);
 app.use("/owner", OwnerRouter);
+app.use("/auth", UserRouter);
 
 const noteController = new NoteController();
 app.get("/note", noteController.getAllNotes.bind(noteController));

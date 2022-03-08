@@ -10,15 +10,15 @@ export default class UserQuery implements IQuery {
     }
 
     async create(user: IUser): Promise<string> {
-        const sql = `INSERT INTO "${this.tableName}" (firstName, lastName, phone, email, password, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+        const sql = `INSERT INTO "${this.tableName}" (first_name, last_name, phone, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
 
         const { rows } = await query(sql, [
-            user.firstName,
-            user.lastName,
+            user.first_name,
+            user.last_name,
             user.phone,
             user.email,
             user.password,
-            user.role,
+            // user.role,
         ]);
         return rows[0];
     }
@@ -26,7 +26,7 @@ export default class UserQuery implements IQuery {
     async delete(id: string): Promise<any> {
         const sql = `DELETE FROM "${this.tableName}" WHERE id = $1`;
 
-        await query(sql, [id]);
+        await query(sql, [id]);  
     }
 
     async read(id: string): Promise<IUser> {
@@ -46,19 +46,19 @@ export default class UserQuery implements IQuery {
         const sql = `UPDATE "${this.tableName}" SET firstName = $1, lastName = $2, phone = $3, email = $4, password = $5, role = $6 WHERE id = $7 RETURNING *`;
 
         const { rows } = await query(sql, [
-            user.firstName,
-            user.lastName,
+            user.first_name,
+            user.last_name,
             user.phone,
             user.email,
             user.password,
-            user.role,
+            // user.role,
             id,
         ]);
         return rows[0];
     }
 
-    async readBy(user: string, value: string): Promise<any> {
-        const sql = `SELECT * FROM "${this.tableName}" WHERE ${user} = ${value}`;
+    async readBy(property: string, value: string): Promise<any> {
+        const sql = `SELECT * FROM "${this.tableName}" WHERE ${property} = '${value}'`;
 
         const { rows } = await query(sql, []);
 

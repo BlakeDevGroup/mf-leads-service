@@ -5,16 +5,19 @@ import MessageService, {
 } from "../../common/message/MessageService";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import * as argon2 from "argon2";
 
+const saltRounds = 10;
 export default class UserService {
     dao: UserDao = new UserDao();
 
     async authenticate(
-        username: string,
+        email: string,
         password: string
     ): Promise<ResponsePayload> {
-        const user: IUser[] = await this.dao.readBy("user_name", username);
+        const user: IUser[] = await this.dao.readBy("email", email);
 
+        //argon2.verify(password,)
         if (!user[0] || !(await bcrypt.compare(password, user[0].password))) {
             return MessageService.sendFailure(
                 400,
@@ -35,11 +38,35 @@ export default class UserService {
         );
     }
 
-    async add(resource: IUser) {
+    async add(resource: IUser): Promise<ResponsePayload> {
         try {
-            const user = await this.dao.create(resource);
+            //hashing, bcrypt, encrypt
+            const result = await this.dao.readBy("email", resource.email);
+
+            if (result.length > 0) {
+                return MessageService.sendFailure(
+                    400,
+                    "An account already exists with this email"
+                );
+            }
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const bcryptHash = await bcrypt.hashSync(resource.password, salt);
+
+            const user = await this.dao.create(
+                Object.assign({}, resource, { password: bcryptHash })
+            );
 
             return MessageService.sendSuccess(201, user);
+        } catch (e: any) {
+            return MessageService.sendFailure(500, e.message);
+        }
+    }
+
+    async putById(id: string, resource: Partial<IUser>) {
+        try {
+            const user = await this.dao.update(id, resource);
+
+            return MessageService.sendSuccess(200, user);
         } catch (e: any) {
             return MessageService.sendFailure(500, e.message);
         }

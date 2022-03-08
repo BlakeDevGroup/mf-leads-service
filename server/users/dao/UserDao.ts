@@ -1,7 +1,7 @@
 import { IUser } from "../IUser";
 import { IQuery } from "../../common/IQuery";
 // import Query from "../../common/query/Query";
-import Query from "../query/UserQuery"
+import Query from "../query/UserQuery";
 
 export default class UserDao implements IQuery {
     private query: IQuery = new Query("users");
