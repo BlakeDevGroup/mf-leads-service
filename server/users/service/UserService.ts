@@ -43,7 +43,9 @@ export default class UserService {
             //hashing, bcrypt, encrypt
             const result = await this.dao.readBy("email", resource.email);
 
-            if (result.length > 0) {
+            if (
+                resource.email.toLowerCase() === result[0].email.toLowerCase()
+            ) {
                 return MessageService.sendFailure(
                     400,
                     "An account already exists with this email"
