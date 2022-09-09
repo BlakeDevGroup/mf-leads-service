@@ -47,7 +47,6 @@ const SECRET = process.env.SECRET;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-
 app.get("/", (req, res) => {
     res.status(200).send(RUNNING_MESSAGE);
 });

@@ -59,7 +59,6 @@ export default class PropertyService implements IService {
             );
         } catch (e: any) {
             return MessageService.sendFailure(500, e.message);
-
         }
     }
 
@@ -75,7 +74,6 @@ export default class PropertyService implements IService {
             return MessageService.sendSuccess(200, properties);
         } catch (e: any) {
             return MessageService.sendFailure(500, e.message);
-
         }
     }
 }

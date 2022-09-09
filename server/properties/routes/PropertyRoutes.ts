@@ -15,6 +15,11 @@ PropertyRouter.post(
     propertyController.createProperty.bind(propertyController)
 );
 
+PropertyRouter.get(
+    "/export",
+    propertyController.ExportAllPropertyData.bind(propertyController)
+);
+
 PropertyRouter.use("/:property_id*", (req: Request, res, next) => {
     req.body.property_id = req.params.property_id;
     next();
