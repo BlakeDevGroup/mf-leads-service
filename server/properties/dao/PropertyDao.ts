@@ -2,9 +2,7 @@ import { IProperty } from "../IProperty";
 import { IQuery } from "../../common/IQuery";
 import Query from "../query/PropertyQuery";
 
-
 export default class PropertyDAO {
-
     private query: IQuery;
 
     constructor(query: IQuery = new Query("properties")) {
@@ -31,11 +29,11 @@ export default class PropertyDAO {
         return this.query.update(id, resource);
     }
 
-
     async readPropertiesByOwnerId(owner_id: string) {
         return this.query.readBy("owner_id", owner_id);
     }
 
-    async readBy(property: string, value: string) {}
-
+    async readBy(property: string, value: string) {
+        return this.query.readBy(property, value);
+    }
 }

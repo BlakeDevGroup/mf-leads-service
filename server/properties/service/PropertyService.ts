@@ -19,6 +19,15 @@ export default class PropertyService implements IService {
     }
     async add(resource: IProperty): Promise<ResponsePayload> {
         try {
+            const result = await this.dao.readBy("street", resource.street);
+
+            if (resource.street.toLowerCase() === result[0]?.street.toLowerCase()) {
+                return MessageService.sendFailure(
+                    400,
+                    "A property already exists with that address"
+                );
+            }
+
             const property = await this.dao.create(resource);
 
             return MessageService.sendSuccess(201, property);
@@ -26,6 +35,7 @@ export default class PropertyService implements IService {
             return MessageService.sendFailure(500, e.message);
         }
     }
+
     async putById(id: string, resource: IProperty): Promise<ResponsePayload> {
         try {
             const property = await this.dao.update(id, resource);
@@ -59,7 +69,6 @@ export default class PropertyService implements IService {
             );
         } catch (e: any) {
             return MessageService.sendFailure(500, e.message);
-
         }
     }
 
@@ -75,7 +84,6 @@ export default class PropertyService implements IService {
             return MessageService.sendSuccess(200, properties);
         } catch (e: any) {
             return MessageService.sendFailure(500, e.message);
-
         }
     }
 }

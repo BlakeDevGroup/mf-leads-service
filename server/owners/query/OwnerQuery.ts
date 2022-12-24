@@ -10,10 +10,12 @@ export default class OwnerQuery implements IQuery {
     }
 
     async create(owner: IOwner): Promise<string> {
-        const sql = `INSERT INTO "${this.tableName}" (name, email, entity, phone_number) VALUES ($1, $2, $3, $4) RETURNING id`;
+        const sql = `INSERT INTO "${this.tableName}" (name, first_name, last_name, email, entity, phone_number) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
 
         const { rows } = await query(sql, [
             owner.name,
+            owner.first_name,
+            owner.last_name,
             owner.email,
             owner.entity,
             owner.phone_number,

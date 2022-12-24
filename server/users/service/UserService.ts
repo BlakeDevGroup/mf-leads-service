@@ -5,7 +5,6 @@ import MessageService, {
 } from "../../common/message/MessageService";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import * as argon2 from "argon2";
 
 const saltRounds = 10;
 export default class UserService {
@@ -40,7 +39,6 @@ export default class UserService {
 
     async add(resource: IUser): Promise<ResponsePayload> {
         try {
-            //hashing, bcrypt, encrypt
             const result = await this.dao.readBy("email", resource.email);
 
             if (
